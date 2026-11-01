@@ -1,0 +1,21 @@
+# Đặt tên project riêng: nếu không, Compose lấy tên thư mục ("backend") làm tên project
+# và sẽ đụng với các dự án khác cũng nằm trong thư mục "backend".
+name: ecom
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: ecom_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ecom
+      POSTGRES_PASSWORD: ecom
+      POSTGRES_DB: ecom
+    ports:
+      # Cổng 5432 trên máy đã bị dự án khác dùng -> map ra 5434
+      - '5434:5432'
+    volumes:
+      - ecom_pgdata:/var/lib/postgresql/data
+
+volumes:
+  ecom_pgdata:
