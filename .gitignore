@@ -1,11 +1,6 @@
-node_modules
-dist
-coverage
+# Dự án mẫu của khóa học (repo riêng của người khác), không đưa lên repo này
+Nestjs-Super/
 
-# Keep environment variables out of version control
-.env
-
-/src/generated/prisma
-
-# TypeScript incremental build cache
-*.tsbuildinfo
+# Hệ điều hành / editor
+.DS_Store
+Thumbs.db
