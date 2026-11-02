@@ -51,10 +51,10 @@ function addResponseEnvelope(document: OpenAPIObject) {
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
-  app.enableCors()
+  app.enableCors({ origin: ['http://localhost:3000'] })
   app.use(helmet())
 
-  // Swagger UI: http://localhost:3000/api
+  // Swagger UI: http://localhost:4000/api
   const config = new DocumentBuilder()
     .setTitle('Ecommerce API')
     .setDescription('The API for the ecommerce application')

@@ -16,18 +16,18 @@ npm run db:migrate     # tạo bảng
 npm run start:dev
 ```
 
-- Health check: <http://localhost:3000/health>
-- Swagger UI: <http://localhost:3000/api>
+- Health check: <http://localhost:4000/health>
+- Swagger UI: <http://localhost:4000/api>
 
 ## Scripts
 
-| Lệnh | Mô tả |
-| --- | --- |
-| `npm run start:dev` | Chạy dev, tự reload khi sửa code |
-| `npm run db:migrate` | Tạo + áp migration sau khi sửa `prisma/schema.prisma` |
-| `npm run db:generate` | Sinh lại Prisma Client |
-| `npm run db:studio` | Giao diện web xem/sửa dữ liệu |
-| `npm run test:e2e` | Test end-to-end |
+| Lệnh                  | Mô tả                                                 |
+| --------------------- | ----------------------------------------------------- |
+| `npm run start:dev`   | Chạy dev, tự reload khi sửa code                      |
+| `npm run db:migrate`  | Tạo + áp migration sau khi sửa `prisma/schema.prisma` |
+| `npm run db:generate` | Sinh lại Prisma Client                                |
+| `npm run db:studio`   | Giao diện web xem/sửa dữ liệu                         |
+| `npm run test:e2e`    | Test end-to-end                                       |
 
 ## Cấu trúc
 

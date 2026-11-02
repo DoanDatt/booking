@@ -15,5 +15,5 @@ cp .env.example .env
 npm install
 npm run db:up        # bật PostgreSQL bằng Docker (cổng 5434)
 npm run db:migrate
-npm run start:dev    # Swagger: http://localhost:3000/api
+npm run start:dev    # Swagger: http://localhost:4000/api
 ```
