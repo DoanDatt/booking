@@ -6,9 +6,10 @@ import { SharedModule } from './shared/shared.module.js'
 import CustomZodValidationPipe from './shared/pipes/custom-zod-validation.pipe.js'
 import { CustomZodSerializerInterceptor } from './shared/interceptor/custom-zod.interceptor.js'
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter.js'
+import { LanguageModule } from './routes/language/language.module.js'
 
 @Module({
-  imports: [SharedModule],
+  imports: [SharedModule, LanguageModule],
   controllers: [AppController],
   providers: [
     AppService,
