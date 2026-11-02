@@ -7,9 +7,10 @@ import CustomZodValidationPipe from './shared/pipes/custom-zod-validation.pipe.j
 import { CustomZodSerializerInterceptor } from './shared/interceptor/custom-zod.interceptor.js'
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter.js'
 import { LanguageModule } from './routes/language/language.module.js'
+import { BrandModule } from './routes/brand/brand.module.js'
 
 @Module({
-  imports: [SharedModule, LanguageModule],
+  imports: [SharedModule, LanguageModule, BrandModule],
   controllers: [AppController],
   providers: [
     AppService,
