@@ -8,9 +8,10 @@ import { CustomZodSerializerInterceptor } from './shared/interceptor/custom-zod.
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter.js'
 import { LanguageModule } from './routes/language/language.module.js'
 import { BrandModule } from './routes/brand/brand.module.js'
+import { AuthModule } from './routes/auth/auth.module.js'
 
 @Module({
-  imports: [SharedModule, LanguageModule, BrandModule],
+  imports: [SharedModule, LanguageModule, BrandModule, AuthModule],
   controllers: [AppController],
   providers: [
     AppService,
