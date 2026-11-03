@@ -15,6 +15,10 @@ if (!fs.existsSync(path.resolve('.env'))) {
 const configSchema = z.object({
   PORT: z.coerce.number().default(4000),
   DATABASE_URL: z.string(),
+  ADMIN_NAME: z.string(),
+  ADMIN_EMAIL: z.email(),
+  ADMIN_PASSWORD: z.string().min(6),
+  ADMIN_PHONE_NUMBER: z.string(),
 })
 
 const configServer = configSchema.safeParse(process.env)
