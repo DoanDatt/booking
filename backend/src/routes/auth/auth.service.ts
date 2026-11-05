@@ -1,10 +1,15 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { AuthRepository } from './auth.repo.js'
 import { HashingService } from '../../shared/services/hashing.service.js'
 import { SharedRoleRepository } from '../../shared/repositories/shared-role.repo.js'
-import { LoginBodyType, RegisterBodyType } from './auth.model.js'
-import { isUniqueConstraintPrismaError } from '../../shared/helpers.js'
-import { EmailAlreadyExistsException, InvalidCredentialsException } from './auth.error.js'
+import { LoginBodyType, RefreshTokenBodyType, RegisterBodyType } from './auth.model.js'
+import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '../../shared/helpers.js'
+import {
+  EmailAlreadyExistsException,
+  InvalidCredentialsException,
+  RefreshTokenAlreadyUsedException,
+  UnauthorizedAccessException,
+} from './auth.error.js'
 import { InvalidClassException } from '@nestjs/core/internal'
 import { AccessTokenPayloadCreate } from '../../shared/types/jwt.type.js'
 import { TokenService } from '../../shared/services/token.service.js'
@@ -76,5 +81,53 @@ export class AuthService {
     })
 
     return { accessToken, refreshToken }
+  }
+
+  async refreshToken({ refreshToken, userAgent, ip }: RefreshTokenBodyType & { userAgent: string; ip: string }) {
+    try {
+      // 1. Kiểm tra chữ ký và hạn (sai → ném lỗi của thư viện JWT)
+      const { userId } = await this.tokenService.verifyRefreshToken(refreshToken)
+
+      // 2. Kiểm tra token còn trong DB không
+      const refreshTokenInDb = await this.authRepository.findRefreshTokenIncludeUserRole(refreshToken)
+      if (!refreshTokenInDb) {
+        throw RefreshTokenAlreadyUsedException()
+      }
+
+      const { deviceId, user } = refreshTokenInDb
+
+      // 3. Cập nhật thông tin thiết bị (IP có thể đã đổi)
+      await this.authRepository.updateDevice(deviceId, { ip, userAgent })
+
+      // 4. Xóa token cũ → nó chỉ dùng được 1 lần
+      await this.authRepository.deleteRefreshToken(refreshToken)
+
+      // 5. Cấp cặp mới, role lấy MỚI NHẤT từ DB
+      return await this.generateTokens({ userId, deviceId, roleId: user.roleId, roleName: user.role.name })
+    } catch (error) {
+      // Lỗi mình tự ném (AlreadyUsed) thì giữ nguyên
+      if (error instanceof HttpException) {
+        throw error
+      }
+      // Lỗi khác (sai chữ ký, hết hạn...) → 401
+      throw UnauthorizedAccessException()
+    }
+  }
+
+  async logout(refreshToken: string) {
+    try {
+      // 1. Kiểm tra chữ ký và hạn
+      await this.tokenService.verifyRefreshToken(refreshToken)
+      // 2. Xóa token (không có trong DB → Prisma ném P2025)
+      const deletedRefreshToken = await this.authRepository.deleteRefreshToken(refreshToken)
+      // 3. Đánh dấu thiết bị đã đăng xuất
+      await this.authRepository.updateDevice(deletedRefreshToken.deviceId, { isActive: false })
+      return { message: 'Logout successfully' }
+    } catch (error) {
+      if (isNotFoundPrismaError(error)) {
+        throw RefreshTokenAlreadyUsedException()
+      }
+      throw UnauthorizedAccessException()
+    }
   }
 }

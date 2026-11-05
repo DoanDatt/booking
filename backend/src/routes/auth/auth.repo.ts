@@ -33,4 +33,20 @@ export class AuthRepository {
   createRefreshToken(data: { token: string; userId: number; deviceId: number; expiresAt: Date }) {
     return this.prismaService.refreshToken.create({ data })
   }
+
+  // token là @unique trong schema → dùng findUnique được
+  findRefreshTokenIncludeUserRole(token: string) {
+    return this.prismaService.refreshToken.findUnique({
+      where: { token },
+      include: { user: { include: { role: true } } }, // lồng 2 tầng: token → user → role
+    })
+  }
+
+  updateDevice(deviceId: number, data: { ip?: string; userAgent?: string; isActive?: boolean }) {
+    return this.prismaService.device.update({ where: { id: deviceId }, data })
+  }
+
+  deleteRefreshToken(token: string) {
+    return this.prismaService.refreshToken.delete({ where: { token } })
+  }
 }

@@ -42,3 +42,15 @@ export const LoginResSchema = z.object({
 
 export type LoginBodyType = z.infer<typeof LoginBodySchema>
 export type LoginResType = z.infer<typeof LoginResSchema>
+
+export const RefreshTokenBodySchema = z
+  .object({
+    refreshToken: z.string(),
+  })
+  .strict()
+
+export const RefreshTokenResSchema = LoginResSchema // cũng trả { accessToken, refreshToken }
+export const LogoutBodySchema = RefreshTokenBodySchema // logout cũng gửi { refreshToken }
+
+export type RefreshTokenBodyType = z.infer<typeof RefreshTokenBodySchema>
+export type LogoutBodyType = RefreshTokenBodyType
