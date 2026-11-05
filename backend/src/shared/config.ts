@@ -19,6 +19,10 @@ const configSchema = z.object({
   ADMIN_EMAIL: z.email(),
   ADMIN_PASSWORD: z.string().min(6),
   ADMIN_PHONE_NUMBER: z.string(),
+  ACCESS_TOKEN_SECRET: z.string(),
+  ACCESS_TOKEN_EXPIRES_IN: z.string(),
+  REFRESH_TOKEN_SECRET: z.string(),
+  REFRESH_TOKEN_EXPIRES_IN: z.string(),
 })
 
 const configServer = configSchema.safeParse(process.env)
