@@ -2,9 +2,12 @@ import { Injectable } from '@nestjs/common'
 import { AuthRepository } from './auth.repo.js'
 import { HashingService } from '../../shared/services/hashing.service.js'
 import { SharedRoleRepository } from '../../shared/repositories/shared-role.repo.js'
-import { RegisterBodyType } from './auth.model.js'
+import { LoginBodyType, RegisterBodyType } from './auth.model.js'
 import { isUniqueConstraintPrismaError } from '../../shared/helpers.js'
-import { EmailAlreadyExistsException } from './auth.error.js'
+import { EmailAlreadyExistsException, InvalidCredentialsException } from './auth.error.js'
+import { InvalidClassException } from '@nestjs/core/internal'
+import { AccessTokenPayloadCreate } from '../../shared/types/jwt.type.js'
+import { TokenService } from '../../shared/services/token.service.js'
 
 @Injectable()
 export class AuthService {
@@ -12,6 +15,7 @@ export class AuthService {
     private readonly authRepository: AuthRepository,
     private readonly hashingService: HashingService,
     private readonly sharedRoleRepository: SharedRoleRepository,
+    private readonly tokenService: TokenService,
   ) {}
 
   async register(body: RegisterBodyType) {
@@ -32,5 +36,45 @@ export class AuthService {
       }
       throw error
     }
+  }
+
+  async login(body: LoginBodyType & { userAgent: string; ip: string }) {
+    const user = await this.authRepository.findUserByEmailIncludeRole(body.email)
+    if (!user) {
+      throw InvalidCredentialsException()
+    }
+    const isPasswordMatch = await this.hashingService.compare(body.password, user.password)
+
+    if (!isPasswordMatch) {
+      throw InvalidCredentialsException()
+    }
+
+    const device = await this.authRepository.createDevice({
+      userId: user.id,
+      userAgent: body.userAgent,
+      ip: body.ip,
+    })
+
+    return this.generateTokens({
+      userId: user.id,
+      deviceId: device.id,
+      roleId: user.roleId,
+      roleName: user.role.name,
+    })
+  }
+
+  async generateTokens({ userId, deviceId, roleId, roleName }: AccessTokenPayloadCreate) {
+    const accessToken = this.tokenService.signAccessToken({ userId, deviceId, roleId, roleName })
+    const refreshToken = this.tokenService.signRefreshToken({ userId })
+
+    const decodedRefreshToken = await this.tokenService.verifyRefreshToken(refreshToken)
+    await this.authRepository.createRefreshToken({
+      token: refreshToken,
+      userId,
+      deviceId,
+      expiresAt: new Date(decodedRefreshToken.exp * 1000),
+    })
+
+    return { accessToken, refreshToken }
   }
 }

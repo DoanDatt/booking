@@ -29,3 +29,16 @@ export const RegisterResSchema = UserSchema.omit({
 
 export type RegisterBodyType = z.infer<typeof RegisterBodySchema>
 export type RegisterResType = z.infer<typeof RegisterResSchema>
+
+export const LoginBodySchema = UserSchema.pick({
+  email: true,
+  password: true,
+}).strict()
+
+export const LoginResSchema = z.object({
+  accessToken: z.string(),
+  refreshToken: z.string(),
+})
+
+export type LoginBodyType = z.infer<typeof LoginBodySchema>
+export type LoginResType = z.infer<typeof LoginResSchema>
