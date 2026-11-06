@@ -7,14 +7,13 @@ import CustomZodValidationPipe from './shared/pipes/custom-zod-validation.pipe.j
 import { CustomZodSerializerInterceptor } from './shared/interceptor/custom-zod.interceptor.js'
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter.js'
 import { LanguageModule } from './routes/language/language.module.js'
-import { BrandModule } from './routes/brand/brand.module.js'
 import { AuthModule } from './routes/auth/auth.module.js'
 import { AccessTokenGuard } from './shared/guards/access-token.guard.js'
 import { RolesGuard } from './shared/guards/roles.guard.js'
 import { ProfileModule } from './routes/profile/profile.module.js'
 
 @Module({
-  imports: [SharedModule, LanguageModule, BrandModule, AuthModule, ProfileModule],
+  imports: [SharedModule, LanguageModule, AuthModule, ProfileModule],
   controllers: [AppController],
   providers: [
     AppService,
