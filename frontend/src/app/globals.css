@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Màu và font lấy từ Figma (Travel Agency Landing Page) */
+@theme {
+  --color-coral: #df6951;
+  --color-coral-light: #ff7152;
+  --color-amber: #f1a501;
+  --color-cream: #fff1da;
+  --color-violet: #6246e5;
+  --color-navy: #181e4b;
+  --color-navy-deep: #14183e;
+  --color-heading: #1e1d4c;
+  --color-body: #5e6282;
+  --color-muted: #686d77;
+  --color-ink: #212832;
+  --color-plus: #e5e5e5;
+
+  --font-volkhov: var(--font-volkhov);
+  --font-poppins: var(--font-poppins);
+  --font-google-sans: var(--font-google-sans);
+  --font-open-sans: var(--font-open-sans);
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-body);
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}
