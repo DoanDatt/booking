@@ -20,3 +20,16 @@ export const UserSchema = z.object({
   updatedAt: DateTimeSchema,
 })
 export type UserType = z.infer<typeof UserSchema>
+
+// Dùng cho GET /profile ̣sau này cả GET /users/:id của admin
+
+export const GetUserProfileResSchema = UserSchema.omit({
+  password: true,
+  totpSecret: true,
+}).extend({
+  role: z.object({
+    id: z.number(),
+    name: z.string(),
+  }),
+})
+export type GetUserProfileResType = z.infer<typeof GetUserProfileResSchema>

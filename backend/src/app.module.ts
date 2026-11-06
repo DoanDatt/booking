@@ -11,9 +11,10 @@ import { BrandModule } from './routes/brand/brand.module.js'
 import { AuthModule } from './routes/auth/auth.module.js'
 import { AccessTokenGuard } from './shared/guards/access-token.guard.js'
 import { RolesGuard } from './shared/guards/roles.guard.js'
+import { ProfileModule } from './routes/profile/profile.module.js'
 
 @Module({
-  imports: [SharedModule, LanguageModule, BrandModule, AuthModule],
+  imports: [SharedModule, LanguageModule, BrandModule, AuthModule, ProfileModule],
   controllers: [AppController],
   providers: [
     AppService,

@@ -81,6 +81,13 @@ Dữ liệu người dùng gửi lên **không bao giờ tin hoàn toàn** → Z
 ### Khác
 - `include: { role: true }` → JOIN sang bảng khác (`user.role.name`). Lồng được: `include: { user: { include: { role: true } } }`.
 - `omit: { password: true }` → DB không trả cột đó (lớp bảo vệ thứ 2 bên cạnh Zod `.omit`).
+- `include: { role: { select: { id: true, name: true } } }` → JOIN nhưng chỉ lấy **đúng các cột cần**, không lấy hết (nhanh hơn, không lộ dữ liệu thừa).
+
+### Đường dẫn route
+Đường dẫn = `@Controller('a')` + `@Get('b')` → `/a/b`. Để trống cả hai → route rơi vào `/`. `tsc` không bắt được vì chỉ là chuỗi.
+
+### API "của tôi" (`/profile`)
+Không có `/:id` trên URL — lấy `userId` **từ token** (`@ActiveUser`) → không đổi được để xem dữ liệu người khác. Vẫn phải kiểm tra `!user`: token còn hạn nhưng tài khoản có thể đã bị xóa.
 
 ## 6. Xóa mềm vs xóa cứng
 
