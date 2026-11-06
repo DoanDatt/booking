@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { BookTrip } from "@/components/landing/book-trip";
+import { Destinations } from "@/components/landing/destinations";
 import { Hero } from "@/components/landing/hero";
 import { Services } from "@/components/landing/services";
 import { SiteHeader } from "@/components/landing/site-header";
 
 // Landing page theo Figma "Travel Agency Landing Page" (khổ 1440px).
-// Còn thiếu: Destinations, Book a trip, Testimonials, Logos, Subscribe, Footer — chờ ảnh export từ Figma.
+// Còn thiếu: Testimonials, Logos, Subscribe, Footer — chờ ảnh export từ Figma.
 export default function Home() {
   return (
     <div className="relative isolate overflow-x-clip pb-32">
@@ -23,6 +25,8 @@ export default function Home() {
       <main>
         <Hero />
         <Services />
+        <Destinations />
+        <BookTrip />
       </main>
     </div>
   );
