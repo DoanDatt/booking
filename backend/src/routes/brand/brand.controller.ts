@@ -10,18 +10,19 @@ import {
   UpdateBrandBodyDTO,
 } from './brand.dto.js'
 import { BrandService } from './brand.service.js'
+import { IsPublic } from '../../shared/decorators/is-public-decorator.js'
 
 // Mọi route trong class này đều bắt đầu bằng /languages
 @Controller('brands')
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
-
+  @IsPublic()
   @Get()
   @ZodResponse({ type: GetBrandResDTO })
   findAll() {
     return this.brandService.findAll()
   }
-
+  @IsPublic()
   @Get(':brandId')
   @ZodResponse({ type: GetBrandDetailDTO })
   findById(@Param() params: GetBrandParamsDTO) {

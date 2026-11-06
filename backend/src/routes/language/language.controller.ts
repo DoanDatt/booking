@@ -9,6 +9,7 @@ import {
   UpdateLanguageBodyDTO,
 } from './language.dto.js'
 import { MessageResDTO } from '../../shared/dtos/response.dto.js'
+import { IsPublic } from '../../shared/decorators/is-public-decorator.js'
 
 // Mọi route trong class này đều bắt đầu bằng /languages
 @Controller('languages')
@@ -16,14 +17,14 @@ export class LanguageController {
   constructor(private readonly languageService: LanguageService) {}
 
   // Get /languages
-
+  @IsPublic()
   @Get()
   @ZodResponse({ type: GetLanguagesResDTO })
   findAll() {
     return this.languageService.findAll()
   }
   // Get /languages/vi
-
+  @IsPublic()
   @Get(':languageId')
   @ZodResponse({ type: GetLanguageDetailResDTO })
   findById(@Param() params: GetLanguageParamsDTO) {

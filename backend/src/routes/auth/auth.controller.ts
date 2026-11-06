@@ -12,7 +12,9 @@ import {
 } from './auth.dto.js'
 import { UserAgent } from '../../shared/decorators/user-agent.decorator.js'
 import { MessageResDTO } from '../../shared/dtos/response.dto.js'
+import { IsPublic } from '../../shared/decorators/is-public-decorator.js'
 
+@IsPublic()
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

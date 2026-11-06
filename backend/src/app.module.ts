@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core'
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core'
 import { AppController } from './app.controller.js'
 import { AppService } from './app.service.js'
 import { SharedModule } from './shared/shared.module.js'
@@ -9,6 +9,7 @@ import { HttpExceptionFilter } from './shared/filters/http-exception.filter.js'
 import { LanguageModule } from './routes/language/language.module.js'
 import { BrandModule } from './routes/brand/brand.module.js'
 import { AuthModule } from './routes/auth/auth.module.js'
+import { AccessTokenGuard } from './shared/guards/access-token.guard.js'
 
 @Module({
   imports: [SharedModule, LanguageModule, BrandModule, AuthModule],
@@ -24,6 +25,7 @@ import { AuthModule } from './routes/auth/auth.module.js'
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
+    { provide: APP_GUARD, useClass: AccessTokenGuard },
   ],
 })
 export class AppModule {}
