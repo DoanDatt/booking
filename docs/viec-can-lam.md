@@ -14,14 +14,14 @@ Cập nhật: 2026-11-06. Đánh dấu `[x]` khi xong.
 
 ## Giai đoạn 1 — Backend: dữ liệu chỗ ở (tự viết, Claude review)
 
-### 1. City (điểm đến) ⬅ đang làm
-- [ ] model, dto, error, repo, service, controller, module, đăng ký trong AppModule
-- [ ] `GET /cities`, `GET /cities/:cityId`, `GET /cities/slug/:slug` (công khai)
-- [ ] `POST / PUT / DELETE /cities` (chỉ ADMIN), xóa mềm
-- [ ] Trùng slug → 422 `path: slug`
-- [ ] Test + commit
+### 1. City (điểm đến) ✅
+- [x] model, dto, error, repo, service, controller, module, đăng ký trong AppModule
+- [x] `GET /cities`, `GET /cities/:cityId`, `GET /cities/slug/:slug` (công khai)
+- [x] `POST / PUT / DELETE /cities` (chỉ ADMIN), xóa mềm
+- [x] Trùng slug → 422 `path: slug`
+- [x] Test + commit
 
-### 2. Amenity (tiện nghi)
+### 2. Amenity (tiện nghi) ⬅ tiếp theo
 - [ ] CRUD `/amenities` (GET công khai, còn lại chỉ ADMIN), trùng `name` → 422
 - [ ] Test + commit
 

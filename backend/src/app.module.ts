@@ -11,9 +11,10 @@ import { AuthModule } from './routes/auth/auth.module.js'
 import { AccessTokenGuard } from './shared/guards/access-token.guard.js'
 import { RolesGuard } from './shared/guards/roles.guard.js'
 import { ProfileModule } from './routes/profile/profile.module.js'
+import { CityModule } from './routes/city/city.module.js'
 
 @Module({
-  imports: [SharedModule, LanguageModule, AuthModule, ProfileModule],
+  imports: [SharedModule, LanguageModule, AuthModule, ProfileModule, CityModule],
   controllers: [AppController],
   providers: [
     AppService,
