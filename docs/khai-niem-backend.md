@@ -193,6 +193,20 @@ logout    → xóa refresh token + Device.isActive = false
 - Tự viết decorator tham số: `createParamDecorator((data, ctx) => ...)` → cách lấy dữ liệu viết 1 lần, dùng nhiều nơi, mang sang dự án khác được.
 - **`SetMetadata(key, value)`**: chỉ **dán nhãn** lên hàm/class, không chạy logic. Nơi khác (guard) đọc nhãn bằng `Reflector`.
 
+### `@ActiveUser()`
+- Lấy payload của access token **mà guard đã gắn vào `request.user`** (guard ghi, decorator đọc, chung key `REQUEST_USER_KEY`).
+- `@ActiveUser('userId')` → một field; `@ActiveUser()` → cả payload.
+- `field: keyof AccessTokenPayload` → chỉ được truyền tên field có thật, gõ sai TS báo lỗi.
+- `user?.[field]`: ngoặc vuông để lấy field có tên **nằm trong biến** `field`.
+- Dùng cho `createdById` / `updatedById` / `deletedById` thay vì `null` hay lấy từ body (body thì người dùng giả được, token thì không).
+- **Không dùng ở route `@IsPublic()`**: guard không verify token ở đó → `request.user` là `undefined`.
+
+| Decorator tham số | Lấy từ | Ai đặt vào |
+|---|---|---|
+| `@UserAgent()` | `request.headers['user-agent']` | Trình duyệt |
+| `@Ip()` | `request.ip` | Kết nối mạng |
+| `@ActiveUser()` | `request.user` | AccessTokenGuard |
+
 ## 17. Guard
 
 - **Người gác cổng** chạy **trước** Pipe (Zod) và Controller. Trả `true` → cho qua; ném lỗi → chặn (controller không chạy).

@@ -10,6 +10,7 @@ import {
 } from './language.dto.js'
 import { MessageResDTO } from '../../shared/dtos/response.dto.js'
 import { IsPublic } from '../../shared/decorators/is-public-decorator.js'
+import { ActiveUser } from '../../shared/decorators/active-user.decorator.js'
 
 // Mọi route trong class này đều bắt đầu bằng /languages
 @Controller('languages')
@@ -34,21 +35,25 @@ export class LanguageController {
   // Post /languages
   @Post()
   @ZodResponse({ type: GetLanguageDetailResDTO })
-  create(@Body() body: CreateLanguageBodyDTO) {
-    return this.languageService.create({ data: body, createdById: null })
+  create(@Body() body: CreateLanguageBodyDTO, @ActiveUser('userId') userId: number) {
+    return this.languageService.create({ data: body, createdById: userId })
   }
 
   // Put /languages/vi
   @Put(':languageId')
   @ZodResponse({ type: GetLanguageDetailResDTO })
-  update(@Param() params: GetLanguageParamsDTO, @Body() body: UpdateLanguageBodyDTO) {
-    return this.languageService.update({ id: params.languageId, data: body, updatedById: null })
+  update(
+    @Param() params: GetLanguageParamsDTO,
+    @Body() body: UpdateLanguageBodyDTO,
+    @ActiveUser('userId') userId: number,
+  ) {
+    return this.languageService.update({ id: params.languageId, data: body, updatedById: userId })
   }
 
   // Delete
   @Delete(':languageId')
   @ZodResponse({ type: MessageResDTO })
-  delete(@Param() params: GetLanguageParamsDTO) {
-    return this.languageService.delete({ id: params.languageId, deletedById: null })
+  delete(@Param() params: GetLanguageParamsDTO, @ActiveUser('userId') userId: number) {
+    return this.languageService.delete({ id: params.languageId, deletedById: userId })
   }
 }

@@ -11,6 +11,7 @@ import {
 } from './brand.dto.js'
 import { BrandService } from './brand.service.js'
 import { IsPublic } from '../../shared/decorators/is-public-decorator.js'
+import { ActiveUser } from '../../shared/decorators/active-user.decorator.js'
 
 // Mọi route trong class này đều bắt đầu bằng /languages
 @Controller('brands')
@@ -31,20 +32,20 @@ export class BrandController {
 
   @Post()
   @ZodResponse({ type: GetBrandDetailDTO })
-  create(@Body() body: CreateBrandBodyDTO) {
-    return this.brandService.create({ data: body, createdById: null })
+  create(@Body() body: CreateBrandBodyDTO, @ActiveUser('userId') userId: number) {
+    return this.brandService.create({ data: body, createdById: userId })
   }
 
   @Put(':brandId')
   @ZodResponse({ type: GetBrandDetailDTO })
-  update(@Param() params: GetBrandParamsDTO, @Body() body: UpdateBrandBodyDTO) {
-    return this.brandService.update({ id: params.brandId, data: body, updatedById: null })
+  update(@Param() params: GetBrandParamsDTO, @Body() body: UpdateBrandBodyDTO, @ActiveUser('userId') userId: number) {
+    return this.brandService.update({ id: params.brandId, data: body, updatedById: userId })
   }
 
   // Delete
   @Delete(':brandId')
   @ZodResponse({ type: MessageResDTO })
-  delete(@Param() params: GetBrandParamsDTO) {
-    return this.brandService.delete({ id: params.brandId, deletedById: null })
+  delete(@Param() params: GetBrandParamsDTO, @ActiveUser('userId') userId: number) {
+    return this.brandService.delete({ id: params.brandId, deletedById: userId })
   }
 }
