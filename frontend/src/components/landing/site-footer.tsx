@@ -20,7 +20,7 @@ const SOCIALS: { label: string; className: string; icon: ReactNode }[] = [
   },
   {
     label: "Instagram",
-    className: "size-[45px] bg-gradient-to-br from-[#d968eb] via-[#ee8bb5] to-[#f5c977] text-white shadow-[0px_10px_30px_rgba(217,104,235,0.25)]",
+    className: "size-[45px] bg-linear-to-br from-[#d968eb] via-[#ee8bb5] to-[#f5c977] text-white shadow-[0px_10px_30px_rgba(217,104,235,0.25)]",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
         <rect x="3" y="3" width="18" height="18" rx="5" />

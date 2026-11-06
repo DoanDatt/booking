@@ -57,7 +57,7 @@ export function Subscribe() {
           </label>
           <button
             type="submit"
-            className="h-[68px] rounded-[10px] bg-gradient-to-b from-[#ff946d] to-[#ff7d68] px-[50px] font-open-sans text-[18px] font-semibold text-white transition hover:brightness-105 sm:w-[180px] sm:px-0"
+            className="h-[68px] rounded-[10px] bg-linear-to-b from-[#ff946d] to-[#ff7d68] px-[50px] font-open-sans text-[18px] font-semibold text-white transition hover:brightness-105 sm:w-[180px] sm:px-0"
           >
             Subscribe
           </button>
@@ -65,7 +65,7 @@ export function Subscribe() {
       </div>
 
       {/* Nút tròn tím có máy bay giấy, đè lên góc phải trên của thẻ */}
-      <span className="absolute top-[-13px] right-[-20px] hidden size-[70px] items-center justify-center rounded-full bg-gradient-to-b from-[#747def] to-[#5e3be1] md:flex" aria-hidden>
+      <span className="absolute top-[-13px] right-[-20px] hidden size-[70px] items-center justify-center rounded-full bg-linear-to-b from-[#747def] to-[#5e3be1] md:flex" aria-hidden>
         <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
           <path d="M21.7 2.3 2.6 9.6c-.8.3-.8 1.4 0 1.7l6.1 2.2L18 6l-7.5 9.3 2.2 6.1c.3.8 1.4.8 1.7 0l7.3-19.1Z" />
         </svg>
