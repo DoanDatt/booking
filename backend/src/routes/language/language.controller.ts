@@ -11,6 +11,8 @@ import {
 import { MessageResDTO } from '../../shared/dtos/response.dto.js'
 import { IsPublic } from '../../shared/decorators/is-public-decorator.js'
 import { ActiveUser } from '../../shared/decorators/active-user.decorator.js'
+import { Roles } from '../../shared/decorators/roles.decorator.js'
+import { RoleName } from '../../shared/constants/role.constant.js'
 
 // Mọi route trong class này đều bắt đầu bằng /languages
 @Controller('languages')
@@ -32,6 +34,7 @@ export class LanguageController {
     return this.languageService.findById(params.languageId)
   }
 
+  @Roles(RoleName.Admin)
   // Post /languages
   @Post()
   @ZodResponse({ type: GetLanguageDetailResDTO })
@@ -39,6 +42,7 @@ export class LanguageController {
     return this.languageService.create({ data: body, createdById: userId })
   }
 
+  @Roles(RoleName.Admin)
   // Put /languages/vi
   @Put(':languageId')
   @ZodResponse({ type: GetLanguageDetailResDTO })
@@ -50,6 +54,7 @@ export class LanguageController {
     return this.languageService.update({ id: params.languageId, data: body, updatedById: userId })
   }
 
+  @Roles(RoleName.Admin)
   // Delete
   @Delete(':languageId')
   @ZodResponse({ type: MessageResDTO })

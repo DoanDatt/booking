@@ -236,3 +236,21 @@ verifyAccessToken           → sai/hết hạn → 401 InvalidAccessToken
 request.user = payload      → cho qua (controller lấy lại bằng @ActiveUser)
 ```
 Guard không query DB → nhanh dù chạy ở mọi request.
+
+### RolesGuard + `@Roles()`
+- Cách làm giống `@IsPublic()`: `@Roles(RoleName.Admin)` dán nhãn `roles = ['ADMIN']`, `RolesGuard` đọc bằng `Reflector` rồi so với `request.user.roleName`.
+- Không có nhãn `@Roles` → ai đã đăng nhập cũng qua. Thiếu quyền → **403 Forbidden**.
+- **401** = "không biết bạn là ai" (không/sai token). **403** = "biết bạn là ai nhưng không có quyền".
+- Guard toàn cục chạy **theo thứ tự khai báo** trong `providers`: `AccessTokenGuard` trước (gắn `request.user`), `RolesGuard` sau (cần `request.user`).
+- Gắn `@Roles` lên **từng hàm**, không lên class: route GET có `@IsPublic()` không có `request.user` → nếu class có `@Roles` thì GET bị 403.
+- `@Roles(...)` nhận nhiều role: `@Roles(RoleName.Admin, RoleName.Seller)`.
+- Role chỉ là **lớp 1** (có được gọi API này không). **Lớp 2** là kiểm tra sở hữu trong service (`property.ownerId === user.userId`), vì cần dữ liệu từ DB.
+
+```
+Request → AccessTokenGuard (401) → RolesGuard (403) → Pipe/Zod (422) → Controller
+```
+
+### Cú pháp TS mới
+- **Rest parameter `(...roles: T[])`**: gom bao nhiêu tham số cũng được thành **mảng**. Ngược với spread (trải mảng/object ra).
+- **`(typeof RoleName)[keyof typeof RoleName]`**: lấy kiểu `'ADMIN' | 'CLIENT' | 'SELLER'` từ chính object hằng số (cần `as const`). `keyof` → tên key, `[...]` → giá trị của các key đó.
+- **`.includes(x)`**: mảng có chứa `x` không.

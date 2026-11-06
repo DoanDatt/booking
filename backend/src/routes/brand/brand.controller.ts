@@ -12,6 +12,8 @@ import {
 import { BrandService } from './brand.service.js'
 import { IsPublic } from '../../shared/decorators/is-public-decorator.js'
 import { ActiveUser } from '../../shared/decorators/active-user.decorator.js'
+import { Roles } from '../../shared/decorators/roles.decorator.js'
+import { RoleName } from '../../shared/constants/role.constant.js'
 
 // Mọi route trong class này đều bắt đầu bằng /languages
 @Controller('brands')
@@ -30,18 +32,21 @@ export class BrandController {
     return this.brandService.findById(params.brandId)
   }
 
+  @Roles(RoleName.Admin)
   @Post()
   @ZodResponse({ type: GetBrandDetailDTO })
   create(@Body() body: CreateBrandBodyDTO, @ActiveUser('userId') userId: number) {
     return this.brandService.create({ data: body, createdById: userId })
   }
 
+  @Roles(RoleName.Admin)
   @Put(':brandId')
   @ZodResponse({ type: GetBrandDetailDTO })
   update(@Param() params: GetBrandParamsDTO, @Body() body: UpdateBrandBodyDTO, @ActiveUser('userId') userId: number) {
     return this.brandService.update({ id: params.brandId, data: body, updatedById: userId })
   }
 
+  @Roles(RoleName.Admin)
   // Delete
   @Delete(':brandId')
   @ZodResponse({ type: MessageResDTO })

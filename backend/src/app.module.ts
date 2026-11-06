@@ -10,6 +10,7 @@ import { LanguageModule } from './routes/language/language.module.js'
 import { BrandModule } from './routes/brand/brand.module.js'
 import { AuthModule } from './routes/auth/auth.module.js'
 import { AccessTokenGuard } from './shared/guards/access-token.guard.js'
+import { RolesGuard } from './shared/guards/roles.guard.js'
 
 @Module({
   imports: [SharedModule, LanguageModule, BrandModule, AuthModule],
@@ -26,6 +27,10 @@ import { AccessTokenGuard } from './shared/guards/access-token.guard.js'
       useClass: HttpExceptionFilter,
     },
     { provide: APP_GUARD, useClass: AccessTokenGuard },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
 })
 export class AppModule {}
