@@ -3,7 +3,7 @@ import { CityRepo } from './city.repo.js'
 import { NotFoundRecordException } from '../../shared/error.js'
 import { CreateCityBodyType, UpdateCityBodyType } from './city.model.js'
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '../../shared/helpers.js'
-import { CitySlugAlreadyExistsException } from './city.errror.js'
+import { CitySlugAlreadyExistsException } from './city.error.js'
 
 @Injectable()
 export class CityService {

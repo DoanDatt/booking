@@ -10,8 +10,9 @@ export class CityRepo {
       where: {
         deletedAt: null,
       },
+      // Xếp theo slug (không dấu): theo name thì "Đ" bị xếp sau mọi chữ A–Z
       orderBy: {
-        name: 'asc',
+        slug: 'asc',
       },
     })
   }
