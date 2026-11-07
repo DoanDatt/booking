@@ -14,9 +14,10 @@ import { ProfileModule } from './routes/profile/profile.module.js'
 import { CityModule } from './routes/city/city.module.js'
 import { AmenityModule } from './routes/amenity/amenity.module.js'
 import { PropertyModule } from './routes/property/property.module.js'
+import { RoomTypeModule } from './routes/room-type/room-type.module.js'
 
 @Module({
-  imports: [SharedModule, LanguageModule, AuthModule, ProfileModule, CityModule, AmenityModule, PropertyModule],
+  imports: [SharedModule, LanguageModule, AuthModule, ProfileModule, CityModule, AmenityModule, PropertyModule, RoomTypeModule],
   controllers: [AppController],
   providers: [
     AppService,

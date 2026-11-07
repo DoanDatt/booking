@@ -25,20 +25,20 @@ Cập nhật: 2026-11-06. Đánh dấu `[x]` khi xong.
 - [x] CRUD `/amenities` (GET công khai, còn lại chỉ ADMIN), trùng `name` → 422
 - [x] Test + commit
 
-### 3. Property (chỗ ở)
-- [ ] SELLER tạo / sửa / xóa chỗ ở **của mình** (kiểm tra `ownerId === userId`, ADMIN thì được tất cả)
-- [ ] Gắn Amenity (quan hệ n-n: `connect` / `set`)
-- [ ] Duyệt: tạo mới → `PENDING`; ADMIN `APPROVED` / `REJECTED` (kèm `rejectReason`); SELLER sửa chỗ ở bị từ chối → về `PENDING`
-- [ ] `GET /properties` (công khai, chỉ `APPROVED`): phân trang, lọc theo thành phố / loại, tìm theo tên
-- [ ] `GET /properties/:id`: chi tiết kèm City, Amenity, RoomType
-- [ ] `GET /manage/properties`: SELLER xem chỗ ở của mình (mọi trạng thái), ADMIN xem tất cả
-- [ ] Test + commit
+### 3. Property (chỗ ở) ✅
+- [x] SELLER tạo / sửa / xóa chỗ ở **của mình** (kiểm tra `ownerId === userId`, ADMIN thì được tất cả)
+- [x] Gắn Amenity (quan hệ n-n: `connect` / `set`)
+- [x] Duyệt: tạo mới → `PENDING`; ADMIN `APPROVED` / `REJECTED` (kèm `rejectReason`); SELLER sửa chỗ ở bị từ chối → về `PENDING`
+- [x] `GET /properties` (công khai, chỉ `APPROVED`): phân trang, lọc theo thành phố / loại, tìm theo tên
+- [x] `GET /properties/:id`: chi tiết kèm City, Amenity, RoomType
+- [x] `GET /manage/properties`: SELLER xem chỗ ở của mình (mọi trạng thái), ADMIN xem tất cả
+- [x] Test + commit
 
-### 4. RoomType (loại phòng)
-- [ ] SELLER thêm / sửa / xóa loại phòng trong chỗ ở của mình (giá/đêm, số khách, số phòng, ảnh)
-- [ ] Test + commit
+### 4. RoomType (loại phòng) ✅
+- [x] SELLER thêm / sửa / xóa loại phòng trong chỗ ở của mình (giá/đêm, số khách, số phòng, ảnh)
+- [x] Test + commit
 
-### 5. Seed dữ liệu mẫu
+### 5. Seed dữ liệu mẫu ⬅ tiếp theo
 - [ ] `npm run seed:demo`: ~5 thành phố, tiện nghi, 2–3 SELLER, 10–15 chỗ ở `APPROVED` (mỗi chỗ vài loại phòng), vài CLIENT
 - [ ] Chạy lại được nhiều lần (chỉ tạo cái chưa có)
 
