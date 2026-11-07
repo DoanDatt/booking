@@ -47,9 +47,13 @@ export class CityService {
     try {
       return await this.cityRepo.update({ id, data, updatedById })
     } catch (error) {
-      // P2025: không có dòng nào khớp where (không tồn tại hoặc đã xóa mềm)
+      // P2002: slug mới trùng với City khác
       if (isUniqueConstraintPrismaError(error)) {
         throw CitySlugAlreadyExistsException()
+      }
+      // P2025: không có dòng nào khớp where (không tồn tại hoặc đã xóa mềm)
+      if (isNotFoundPrismaError(error)) {
+        throw NotFoundRecordException()
       }
       throw error
     }

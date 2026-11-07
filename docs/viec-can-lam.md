@@ -21,9 +21,9 @@ Cập nhật: 2026-11-06. Đánh dấu `[x]` khi xong.
 - [x] Trùng slug → 422 `path: slug`
 - [x] Test + commit
 
-### 2. Amenity (tiện nghi) ⬅ tiếp theo
-- [ ] CRUD `/amenities` (GET công khai, còn lại chỉ ADMIN), trùng `name` → 422
-- [ ] Test + commit
+### 2. Amenity (tiện nghi) ✅
+- [x] CRUD `/amenities` (GET công khai, còn lại chỉ ADMIN), trùng `name` → 422
+- [x] Test + commit
 
 ### 3. Property (chỗ ở)
 - [ ] SELLER tạo / sửa / xóa chỗ ở **của mình** (kiểm tra `ownerId === userId`, ADMIN thì được tất cả)
