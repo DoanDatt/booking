@@ -1,14 +1,15 @@
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api";
 
-// Thêm slice mới (auth, bộ lọc tìm kiếm, ...) vào đây.
+// Gộp slice và API thành reducer gốc. Sau này thêm: combineSlices(baseApi, authSlice, ...)
 const rootReducer = combineSlices(baseApi);
 
-// Tạo store mới cho mỗi request (không dùng store toàn cục), để dữ liệu của
-// người dùng này không lọt sang request của người khác khi render trên server.
+// Viết dạng HÀM: mỗi request tạo một store mới, để dữ liệu của user này
+// không lọt sang user khác khi Next render trên server
 export const makeStore = () =>
   configureStore({
     reducer: rootReducer,
+    // RTK Query cần middleware riêng để xử lý cache, gọi lại và xóa dữ liệu cũ
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
   });
 

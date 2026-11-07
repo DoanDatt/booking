@@ -50,7 +50,7 @@ Stack: Next.js 16, Tailwind 4, **Ant Design 6**, **Redux Toolkit + RTK Query**, 
 
 ### Nền tảng
 - [x] Ant Design: `AntdRegistry layer` (SSR style, Tailwind ghi đè được), theme màu Jadoo, locale `vi_VN`, `<App component={false}>`; tắt `cacheComponents` vì antd gọi `Date.now()` lúc render
-- [x] Redux store theo từng request + `Providers` (client), `baseApi` bóc `{ data, statusCode }`
+- [x] Redux store theo từng request + `<Provider>` trong `providers.tsx`, `baseApi` bóc `{ data, statusCode }` (tự setup, [khái niệm](khai-niem-frontend.md))
 - [ ] `baseQueryWithReauth`: gặp 401 → refresh 1 lần (mutex) → gửi lại request, lỗi 422 → gắn vào đúng ô form
 - [ ] Sinh type từ Swagger (`gen:api` hoặc `@rtk-query/codegen-openapi`)
 

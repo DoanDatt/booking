@@ -13,7 +13,7 @@ import { makeStore, type AppStore } from "@/lib/redux/store";
 dayjs.locale("vi");
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  // Lazy init: store chỉ được tạo một lần cho mỗi lần mount (mỗi request trên server).
+  // Truyền makeStore (không có dấu ()): React chỉ gọi nó ở lần render đầu
   const [store] = useState<AppStore>(makeStore);
 
   return (
