@@ -261,3 +261,17 @@ Request → AccessTokenGuard (401) → RolesGuard (403) → Pipe/Zod (422) → C
 - **Rest parameter `(...roles: T[])`**: gom bao nhiêu tham số cũng được thành **mảng**. Ngược với spread (trải mảng/object ra).
 - **`(typeof RoleName)[keyof typeof RoleName]`**: lấy kiểu `'ADMIN' | 'CLIENT' | 'SELLER'` từ chính object hằng số (cần `as const`). `keyof` → tên key, `[...]` → giá trị của các key đó.
 - **`.includes(x)`**: mảng có chứa `x` không.
+
+## 18. Kỹ thuật mới ở Property / RoomType
+
+- **Phân trang**: query `page`, `limit` (`z.coerce`, `limit` tối đa 50) → Prisma `skip: (page - 1) * limit`, `take: limit`. Trả về `{ data, totalItems, page, limit, totalPages }` với `totalPages = Math.ceil(totalItems / limit)`.
+- **`$transaction([count, findMany])`**: đếm và lấy dữ liệu trong cùng 1 lần → số đếm khớp với trang dữ liệu.
+- **Lọc tùy chọn**: field nào `undefined` thì Prisma bỏ qua điều kiện đó → `where: { cityId, type }` dùng được dù không gửi lọc.
+- **Tìm không phân biệt hoa thường**: `name: { contains: search, mode: 'insensitive' }`.
+- **Quan hệ n-n** (Property – Amenity): tạo dùng `connect: ids.map(id => ({ id }))`, sửa dùng `set` (thay toàn bộ danh sách).
+- **Kiểm tra dữ liệu liên quan trước khi ghi**: City còn tồn tại? Mọi `amenityId` còn tồn tại? (`count` so với số id sau khi bỏ trùng bằng `new Set`). Lỗi trả 422 đúng `path` thay vì để Prisma ném lỗi khóa ngoại.
+- **Quyền sở hữu** (lớp 2 sau `@Roles`): `assertCanManage` → không tồn tại 404, không phải chủ 403, ADMIN được tất cả. Đặt trong `PropertyService`, `exports` ở `PropertyModule`, module khác `imports: [PropertyModule]` để dùng lại.
+- **Route lồng nhau**: `/manage/properties/:propertyId/room-types/:roomTypeId` — `where` luôn có cả `propertyId` để không sửa chéo được loại phòng của chỗ ở khác.
+- **2 controller cho 1 module**: `properties` (công khai) và `manage/properties` (SELLER/ADMIN). `@Roles` gắn lên class được khi controller không có route công khai; `@Roles` trên hàm ghi đè `@Roles` của class (`PATCH .../status` chỉ ADMIN).
+- **Trạng thái duyệt**: SELLER sửa → về `PENDING`; ADMIN từ chối bắt buộc có lý do (`superRefine`); khách chỉ thấy `APPROVED`, còn lại trả 404 như không tồn tại.
+- **Đặt tên type tránh trùng**: enum Prisma tên `PropertyType` → type của model đặt `PropertyEntityType`.
