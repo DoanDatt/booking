@@ -13,9 +13,10 @@ import { RolesGuard } from './shared/guards/roles.guard.js'
 import { ProfileModule } from './routes/profile/profile.module.js'
 import { CityModule } from './routes/city/city.module.js'
 import { AmenityModule } from './routes/amenity/amenity.module.js'
+import { PropertyModule } from './routes/property/property.module.js'
 
 @Module({
-  imports: [SharedModule, LanguageModule, AuthModule, ProfileModule, CityModule, AmenityModule],
+  imports: [SharedModule, LanguageModule, AuthModule, ProfileModule, CityModule, AmenityModule, PropertyModule],
   controllers: [AppController],
   providers: [
     AppService,
