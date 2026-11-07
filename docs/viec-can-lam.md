@@ -1,6 +1,6 @@
 # Việc cần làm
 
-Cập nhật: 2026-11-06. Đánh dấu `[x]` khi xong.
+Cập nhật: 2026-11-07. Đánh dấu `[x]` khi xong.
 
 ## Đã xong
 
@@ -46,11 +46,12 @@ Cập nhật: 2026-11-06. Đánh dấu `[x]` khi xong.
 
 ## ★ Giai đoạn 2 — Frontend lần 1 (Claude dựng)
 
-Stack: Next.js 16, Tailwind 4, shadcn/ui, **Redux Toolkit + RTK Query**, React Hook Form + Zod.
+Stack: Next.js 16, Tailwind 4, **Ant Design 6**, **Redux Toolkit + RTK Query**, React Hook Form + Zod.
 
 ### Nền tảng
-- [ ] Redux store theo từng request + `StoreProvider` (client)
-- [ ] `baseQueryWithReauth`: bóc `{ data, statusCode }`, gặp 401 → refresh 1 lần (mutex) → gửi lại request, lỗi 422 → gắn vào đúng ô form
+- [x] Ant Design: `AntdRegistry layer` (SSR style, Tailwind ghi đè được), theme màu Jadoo, locale `vi_VN`, `<App component={false}>`; tắt `cacheComponents` vì antd gọi `Date.now()` lúc render
+- [x] Redux store theo từng request + `Providers` (client), `baseApi` bóc `{ data, statusCode }`
+- [ ] `baseQueryWithReauth`: gặp 401 → refresh 1 lần (mutex) → gửi lại request, lỗi 422 → gắn vào đúng ô form
 - [ ] Sinh type từ Swagger (`gen:api` hoặc `@rtk-query/codegen-openapi`)
 
 ### Auth (học theo Edu Platform)

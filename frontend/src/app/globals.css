@@ -1,3 +1,7 @@
+/* Thứ tự layer: antd nằm sau base (preflight) và trước utilities,
+   nên class Tailwind (vd. className="mt-4") vẫn ghi đè được style antd. */
+@layer theme, base, antd, components, utilities;
+
 @import "tailwindcss";
 
 /* Màu và font lấy từ Figma (Travel Agency Landing Page) */

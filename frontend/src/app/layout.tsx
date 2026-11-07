@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Google_Sans, Open_Sans, Poppins, Volkhov } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const volkhov = Volkhov({
   variable: "--font-volkhov",
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${volkhov.variable} ${poppins.variable} ${googleSans.variable} ${openSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
